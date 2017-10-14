@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    //Variables
     public Text orbCountText;
     public Text tutorialText;
-    public float playerSpeed = 0.1f;
+    public Text healthText;
+    float playerSpeed = 0.2f;
     float jumpForce = 5;
     public Transform playerTransform;
     public Transform handTransform;
@@ -15,12 +18,13 @@ public class Player : MonoBehaviour
     public GameObject[] lightOrbs;
     public GameObject lightOrb;
     float orbCount = 0;
-    public float time1 = 1f;
-    public float time2 = 0.0f;
-    public bool tutorial = true;
+    float time1 = 1f;
+    float time2 = 0.0f;
+    bool tutorial = true;
     public GameObject checkpoint1;
     public float playerHealth = 1000;
 
+    //Check for collision with yellow orbs, checkpoints
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "LightOrb")
@@ -35,25 +39,25 @@ public class Player : MonoBehaviour
         }
         if (other.tag == "Checkpoint2")
         {
-            Boss b = other.gameObject.GetComponent<Boss>();
-            b.bossFight = true;
+            SceneManager.LoadScene(3);
         }
     }
-    
-    // Use this for initialization
+
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
     }
 	
-	// Update is called once per frame
 	void Update ()
     {
         MovePlayer();
         Tutorial();
         FireOrb();
+        PlayerDie();
+        healthText.text = playerHealth.ToString("##");
     }
 
+    //Player Movement
     void MovePlayer()
     {
         if (Input.GetKey(KeyCode.W))
@@ -70,6 +74,7 @@ public class Player : MonoBehaviour
         }
     }
     
+    //Text-based tutorial
     void Tutorial()
     {
         if (time1 >= 1 && time1 <= 3.0f)
@@ -99,9 +104,9 @@ public class Player : MonoBehaviour
         {
             tutorialText.text = "DEFEAT THE BOSS";
         }
-    }
+    }    
     
-    
+    //Fires orb
     void FireOrb()
     {
         if(Input.GetKeyDown(KeyCode.Mouse0) && orbCount>= 1)
@@ -116,13 +121,14 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    //Player dies if health reaches 0
     void PlayerDie()
     {
-        if(playerHealth==0)
+        if(playerHealth<=0)
         {
             Destroy(this.gameObject);
+            SceneManager.LoadScene(2);
         }
-
-    }
-    
+    }    
 }

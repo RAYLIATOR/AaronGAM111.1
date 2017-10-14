@@ -4,27 +4,25 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
+    //Variables
     public float wallHealth=300;
     public Transform wallTransform;
-    public GameObject debris;
-    public Transform debrisTransform;
-    // Use this for initialization
+    
     void Start ()
-    {
-		
+    {		
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         DestroyWall();
 	}
+
+    //Destroys wall after 3 orb shots
     void DestroyWall()
     {
         if(wallHealth==0)
         {
-            Destroy(this.gameObject);
-            //Instantiate(debris, debrisTransform.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);            
         }
     }
 }

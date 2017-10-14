@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossOrb : MonoBehaviour
 {
+    //variables
     public float bossOrbTime;
     public Transform bossOrb;
     public float bossOrbSpeed = 0.3f;
-    // Use this for initialization
+
+    //checks for collision with player
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Player")
         {
             Player p = collision.gameObject.GetComponent<Player>();
             p.playerHealth -= 200;
@@ -18,19 +21,17 @@ public class BossOrb : MonoBehaviour
         }
     }
         void Start ()
-    {
-		
+    {		
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         SimulateBossOrb();
     }
+    //Moves enemy orb
     public void SimulateBossOrb()
     {
         bossOrbTime += Time.deltaTime;
-
         if (bossOrbTime >= 2f)
         {
             bossOrb.transform.position += new Vector3(bossOrbSpeed, 0, 0);

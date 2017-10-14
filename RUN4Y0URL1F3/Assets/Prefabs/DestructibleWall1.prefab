@@ -96,7 +96,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &65615925531230020
 BoxCollider:
@@ -105,7 +105,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464347347864462}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -123,3 +123,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallHealth: 300
   wallTransform: {fileID: 4370158996789088}
+  debris: {fileID: 0}
+  debrisTransform: {fileID: 0}
