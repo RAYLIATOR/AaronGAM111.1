@@ -17,7 +17,9 @@ public class Player : MonoBehaviour
     float orbCount = 0;
     public float time1 = 1f;
     public float time2 = 0.0f;
-    public bool frozen = false;
+    public bool tutorial = true;
+    public GameObject checkpoint1;
+    public float playerHealth = 1000;
 
     void OnTriggerEnter(Collider other)
     {
@@ -26,7 +28,16 @@ public class Player : MonoBehaviour
             orbCount += 1;
             Destroy(other.gameObject);
             orbCountText.text = orbCount.ToString("##");
-        }       
+        }
+        if (other.tag == "Checkpoint1")
+        {
+            tutorial = false;
+        }
+        if (other.tag == "Checkpoint2")
+        {
+            Boss b = other.gameObject.GetComponent<Boss>();
+            b.bossFight = true;
+        }
     }
     
     // Use this for initialization
@@ -53,7 +64,7 @@ public class Player : MonoBehaviour
         {
             playerTransform.position += new Vector3(playerSpeed, 0, 0);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && playerTransform.transform.position.y <= 7)
+        if (Input.GetKeyDown(KeyCode.Space) && playerTransform.transform.position.y <=10)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -66,25 +77,28 @@ public class Player : MonoBehaviour
             time1 += Time.deltaTime;
             tutorialText.text = "USE W AND S TO MOVE AND SPACE TO JUMP";
         }
-        if (time1 > 3.0f)
+        if (time1 > 3.0f && tutorial == true)
         { 
             tutorialText.text = "WALK TO THE YELLOW ORB";
         }
-        if(orbCount == 1)
+        if (orbCount == 1 && tutorial == true)
         {
             tutorialText.text = "YOU HAVE COLLECTED AN ORB!";
             time1 = 0;
             time2 += Time.deltaTime;
         }        
-        if(time2 > 3 && orbCount==1)
+        if(time2 > 3 && orbCount==1 && tutorial == true)
         {
             tutorialText.text = "COLLECT 2 MORE ORBS!";
         }
-        if(orbCount == 3)
+        if(orbCount == 3 )
         {
             tutorialText.text = "GREAT! LEFT CLICK TO FIRE ORB";
         }
-        return;
+        if(orbCount>=4)
+        {
+            tutorialText.text = "DEFEAT THE BOSS";
+        }
     }
     
     
@@ -92,7 +106,7 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0) && orbCount>= 1)
         {
-            GameObject orb = GameObject.FindGameObjectWithTag("LightOrbFire");
+            //GameObject orb = GameObject.FindGameObjectWithTag("LightOrbFire");
             Instantiate(lightOrb, handTransform.transform.position, Quaternion.identity);
             orbCount -= 1;
             orbCountText.text = orbCount.ToString("##");
@@ -101,6 +115,14 @@ public class Player : MonoBehaviour
                 orbCountText.text = "0";
             }
         }
+    }
+    void PlayerDie()
+    {
+        if(playerHealth==0)
+        {
+            Destroy(this.gameObject);
+        }
+
     }
     
 }

@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightOrb: {fileID: 4285487080160604}
   wall: {fileID: 4370158996789088, guid: 7f7a4d1832a41434ca08172c6f432eb7, type: 2}
-  orbSpeed: 0.2
+  orbSpeed: 1
   orbTime: 0
 --- !u!135 &135146860802539470
 SphereCollider:

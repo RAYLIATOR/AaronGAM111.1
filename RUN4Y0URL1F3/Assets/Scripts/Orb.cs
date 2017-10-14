@@ -8,17 +8,23 @@ public class Orb : MonoBehaviour
     public Transform wall;
     public float orbSpeed = 0.2f;
     public float orbTime = 0;
-    float orbDamage = 100;
     float wallOrbDistance;
 
     void OnTriggerEnter(Collider collision)
     {
-        print(collision.gameObject.name);
+       
         if (collision.gameObject.tag == "Wall")
         { 
-            //GameObject wall = GameObject.FindGameObjectWithTag("Wall");
             Wall w = collision.gameObject.GetComponent<Wall>();
             w.wallHealth -= 100;
+            Destroy(this.gameObject);
+        }
+        
+        if (collision.gameObject.tag == "Boss")
+        {
+            Boss b = collision.gameObject.GetComponent<Boss>();
+            b.bossHealth -= 100;
+            Destroy(this.gameObject);
         }
     }
     // Use this for initialization

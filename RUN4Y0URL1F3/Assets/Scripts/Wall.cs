@@ -6,8 +6,10 @@ public class Wall : MonoBehaviour
 {
     public float wallHealth=300;
     public Transform wallTransform;
-	// Use this for initialization
-	void Start ()
+    public GameObject debris;
+    public Transform debrisTransform;
+    // Use this for initialization
+    void Start ()
     {
 		
 	}
@@ -22,6 +24,7 @@ public class Wall : MonoBehaviour
         if(wallHealth==0)
         {
             Destroy(this.gameObject);
+            //Instantiate(debris, debrisTransform.transform.position, Quaternion.identity);
         }
     }
 }

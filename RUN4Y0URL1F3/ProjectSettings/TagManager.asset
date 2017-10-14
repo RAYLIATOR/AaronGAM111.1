@@ -7,6 +7,10 @@ TagManager:
   - LightOrb
   - LightOrbFire
   - Wall
+  - Checkpoint1
+  - Boss
+  - Checkpoint2
+  - wall2
   layers:
   - Default
   - TransparentFX
