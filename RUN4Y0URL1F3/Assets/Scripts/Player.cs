@@ -10,7 +10,9 @@ public class Player : MonoBehaviour
     public Text orbCountText;
     public Text tutorialText;
     public Text healthText;
-    float playerSpeed = 0.2f;
+    public GameObject pauseMenuPanel;
+    public GameObject HUDPanel;
+    float playerSpeed = 7f;
     float jumpForce = 5;
     public Transform playerTransform;
     public Transform handTransform;
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour
         FireOrb();
         PlayerDie();
         healthText.text = playerHealth.ToString("##");
+        Pause();
     }
 
     //Player Movement
@@ -62,15 +65,23 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            playerTransform.position -= new Vector3(playerSpeed, 0, 0);
+            playerTransform.position -= new Vector3(playerSpeed, 0, 0) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            playerTransform.position += new Vector3(playerSpeed, 0, 0);
+            playerTransform.position += new Vector3(playerSpeed, 0, 0) * Time.deltaTime;
         }
         if (Input.GetKeyDown(KeyCode.Space) && playerTransform.transform.position.y <=10)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            playerSpeed = 14f;
+        }
+        else
+        {
+            playerSpeed = 7f;
         }
     }
     
@@ -130,5 +141,25 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
             SceneManager.LoadScene(2);
         }
-    }    
+    }
+    void Pause()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            pauseMenuPanel.gameObject.SetActive(true);
+            HUDPanel.gameObject.SetActive(false);
+        }
+    } 
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        pauseMenuPanel.gameObject.SetActive(false);
+        HUDPanel.gameObject.SetActive(true);
+    }
+    public void MainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }   
 }
